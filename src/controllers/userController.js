@@ -17,6 +17,7 @@ const userRegister = async (req, res) => {
       data: savedData,
     });
   } catch (err) {
+    console.log(err)
     return res.status(500).send({ status: false, message: err.message });
   }
 };
@@ -29,15 +30,15 @@ const loginUser = async (req, res) => {
       return res
         .status(400)
         .send({ status: false, message: "Please Enter email and password" });
-    if (!isValidMail(email))
-      return res
-        .status(400)
-        .send({ status: false, message: `'${email}' is not a valid email` });
+    // if (!isValidMail(email))
+    //   return res
+    //     .status(400)
+    //     .send({ status: false, message: `'${email}' is not a valid email` });
 
-    if (!isValid(password))
-      return res
-        .status(400)
-        .send({ status: false, message: "Enter a valid password " });
+    // if (!isValid(password))
+    //   return res
+    //     .status(400)
+    //     .send({ status: false, message: "Enter a valid password " });
 
     let checkEmail = await userModel.findOne({ email: email });
 

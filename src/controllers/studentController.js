@@ -47,11 +47,11 @@ const editStudent = async (req, res) => {
 
 const getStudent = async (req, res) => {
   try {
-    const studentList = await studentModel.find({
-      isDeleted: false,
-      name: req.query.name,
-      subject: req.query.subject,
-    });
+    let findObj={isDeleted:false}
+    if(req.query.name)findObj.name=req.query.name
+    if(req.query.subject)findObj.subject=req.query.subject
+
+    const studentList = await studentModel.find(findObj);
     return res.status(200).send({ status: true, data: studentList });
   } catch (err) {
     res.status(500).send({ status: false, message: err.message });
