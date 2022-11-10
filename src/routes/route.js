@@ -6,18 +6,23 @@ const {
   editStudent,
   deleteStudent,
 } = require("../controllers/studentController");
-const { userRegister, loginUser } = require("../controllers/userController");
+const {
+  teacherRegister,
+  loginTeacher,
+} = require("../controllers/teacherController");
+const { authentication } = require("../middlewares/auth");
+
 const router = express.Router();
 
 //user APIs
-router.post("/register", userRegister);
-router.post("/login", loginUser);
+router.post("/register", teacherRegister);
+router.post("/login", loginTeacher);
 
 //Student APIs
-router.post("/student/create", createStudent);
-router.get("/student/:studentId", studentDetail);
-router.get("/student", getStudent);
-router.put("/student/:studentId", editStudent);
-router.delete("/student/:studentId", deleteStudent);
+router.post("/student/create", authentication, createStudent);
+router.get("/student/:studentId", authentication, studentDetail);
+router.get("/student", authentication, getStudent);
+router.put("/student/:studentId", authentication, editStudent);
+router.delete("/student/:studentId", authentication, deleteStudent);
 
 module.exports = router;

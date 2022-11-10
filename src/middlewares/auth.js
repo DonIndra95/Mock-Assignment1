@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
-const userModel = require("../models/userModel");
+
 
 const authentication = async function (req, res, next) {
   try {
@@ -35,27 +35,6 @@ const authentication = async function (req, res, next) {
   }
 };
 
-const authorization = async function (req, res, next) {
-  try {
-    let userId = req.params.userId;
 
-    if (!mongoose.isValidObjectId(userId))
-      return res
-        .status(400)
-        .send({ status: false, message: "Not a valid userId" });
 
-    let userDetail = await userModel.findById(userId);
-    if (!userDetail)
-      return res.status(404).send({ status: false, message: "No such userId" });
-
-    if (userId != req.decodeToken.userId)
-      return res
-        .status(403)
-        .send({ status: false, message: "You are not authorized" });
-    next();
-  } catch (err) {
-    res.status(500).send({ status: false, message: err.message });
-  }
-};
-
-module.exports = { authentication, authorization };
+module.exports = { authentication };
