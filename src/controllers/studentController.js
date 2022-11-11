@@ -90,7 +90,7 @@ const getStudent = async (req, res) => {
   try {
     let findObj = { isDeleted: false, teacherId: req.decodeToken.teacherId };
     if (req.query.name) findObj.name = req.query.name;
-    if (req.query.subject) findObj.subject = req.query.subject;
+    if (req.query.subject) findObj["result.subject"] = req.query.subject;
 
     const studentList = await studentModel.find(findObj);
     if (studentList.length < 1)
